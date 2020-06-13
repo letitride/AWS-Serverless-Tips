@@ -36,8 +36,7 @@ $ aws cloudwatch put-metric-alarm \
 
 ```--evaluation-periods```:アラートを上げるまでの連続発生回数
 
-```--alarm-actions arn:aws:sns:ap-northeast-1:****:sample
-```:アラートの通知先
+```--alarm-actions arn:aws:sns:ap-northeast-1:****:sample```:アラートの通知先
 
 参考: https://docs.aws.amazon.com/ja_jp/streams/latest/dev/monitoring-with-cloudwatch.html
 
