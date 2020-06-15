@@ -10,7 +10,7 @@ $ aws s3 website s3://your-application-bucket/ --index-document index.html
 
 bucketポリシーの設定
 ```
-$ aws s3api put-bucket-policy --bucket serverless-app-web-letitride \
+$ aws s3api put-bucket-policy --bucket your-application-bucket \
 --policy file://policy.json
 ```
 
@@ -43,3 +43,30 @@ $ aws iam put-role-policy --role-name lambda-dynamodb-access \
 --policy-name dynamodb-access \
 --policy-document file://permission.json
 ```
+
+sam デプロイ用bucketの作成
+```
+$ aws s3 mb s3://your-sam-bucket
+```
+
+```
+$ aws cloudformation package --template-file template.yaml \
+--output-template-file template-output.yaml \
+--s3-bucket your-sam-bucket
+```
+
+```
+$ aws cloudformation deploy --template-file template-output.yaml \
+--stack-name your-sam-bucket --capabilities CAPABILITY_IAM \
+--region ap-northeast-1 
+```
+
+APIのテスト実行
+```
+$ curl -X POST https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images -d '{"type":"image/jpeg","size":1}'
+
+$ curl -X PUT -d '{"photo_id":"c9d06468-c508-4d5f-b8cf-7235e7989b3a","timestamp":1592126341,"status":"Uploaded"}' https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images
+
+$ curl -X GET https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images
+```
+
