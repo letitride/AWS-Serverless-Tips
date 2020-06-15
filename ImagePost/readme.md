@@ -68,5 +68,7 @@ $ curl -X POST https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/i
 $ curl -X PUT -d '{"photo_id":"c9d06468-c508-4d5f-b8cf-7235e7989b3a","timestamp":1592126341,"status":"Uploaded"}' https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images
 
 $ curl -X GET https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images
+
+$ curl -X GET https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images/c9d06468-c508-4d5f-b8cf-7235e7989b3a
 ```
 
