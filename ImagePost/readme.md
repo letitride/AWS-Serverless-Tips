@@ -70,5 +70,7 @@ $ curl -X PUT -d '{"photo_id":"c9d06468-c508-4d5f-b8cf-7235e7989b3a","timestamp"
 $ curl -X GET https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images
 
 $ curl -X GET https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images/c9d06468-c508-4d5f-b8cf-7235e7989b3a
+
+$ curl -X DELETE -D - https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images/7f5e9a84-3207-4d29-a4b3-5aeb666fe2b2
 ```
 
