@@ -74,3 +74,14 @@ $ curl -X GET https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/im
 $ curl -X DELETE -D - https://yourapiid.execute-api.ap-northeast-1.amazonaws.com/Prod/images/7f5e9a84-3207-4d29-a4b3-5aeb666fe2b2
 ```
 
+vue cli projectの作成
+```
+$ vue init webpack serverless-spa
+$ cd serverless-spa && npm install
+$ npm run dev
+```
+
+vueアプリケーションのbuild
+```
+$ npm run build
+```
