@@ -85,3 +85,14 @@ vueアプリケーションのbuild
 ```
 $ npm run build
 ```
+
+S3 CORSの許可設定
+```
+$ aws s3api put-bucket-cors --bucket your-photos-bucket \
+--cors-configuration file://cors.json
+```
+
+CORS設定確認
+```
+$ curl -I -X GET https://your-photos-bucket.s3-ap-northeast-1.amazonaws.com/example.png -H "Origin: http://example.com"
+```

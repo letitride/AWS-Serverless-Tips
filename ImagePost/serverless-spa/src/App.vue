@@ -1,7 +1,25 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <div class="header">
+      <div class="pure-menu pure-menu-horizontal">
+        <a class="pure-menu-heading" href="">Photo Gallery</a>
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-selected">
+            <a href="#" class="pure-menu-link">Hone</a>
+          </li>
+          <li class="pure-menu-item">
+            <a href="#" class="pure-menu-link">Settings</a>
+          </li>
+          <li class="pure-menu-item">
+            <a href="#" class="pure-menu-link">Login</a>
+          </li>          
+        </ul>
+      </div>
+    </div>
     <router-view/>
+    <div class="footer">
+      This sample app was made by Keisuke Nishitani.
+    </div>
   </div>
 </template>
 
@@ -12,12 +30,12 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.footer{
+  color: #ffffff;
+  font-size: 87.5%;
+  border-top: 1px solid #eee;
+  margin-top: 1em;
+  padding: 1em;
+  background: rgb(49,49,49);
 }
 </style>
