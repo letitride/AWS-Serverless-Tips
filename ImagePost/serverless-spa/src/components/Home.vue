@@ -9,7 +9,7 @@
 
     <div v-for="image in images" :key="image.photo_id"
       class="photo pure-u-1-3 pure-u-md-1-3 pure-u-lg-1-3 pure-u-xl-1-3">
-      <img v-bind:src="image_url_base + image.photo_id + '.' + image.type.split('/')[1]">  
+      <img v-bind:src="image_url_base + image.photo_id + '.' + image.type.split('/')[1]">
     </div>
     <div class="pure-u-1 form-box" id="upload-image">
       <div class="l-box">
@@ -22,65 +22,64 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 import appConfig from '../config'
 
-const API_BASE_URL = appConfig.ApiBaseUrl;
-const IMAGE_BASE_URL = appConfig.ImageBaseUrl;
+const API_BASE_URL = appConfig.ApiBaseUrl
+const IMAGE_BASE_URL = appConfig.ImageBaseUrl
 
 export default {
   name: 'Home',
-  data: function(){
+  data: function () {
     return {
-      image_url_base: appConfig.ImageBaseUrl,
+      image_url_base: IMAGE_BASE_URL,
       uploadFile: null,
       images: []
     }
   },
-  created: function(){
-    this.listImages();
+  created: function () {
+    this.listImages()
   },
   methods: {
-    listImages: function(){
+    listImages: function () {
       var self = this;
       axios.get(
-        API_BASE_URL+"/images/"
-      ).then(function(res){
-        self.$data.images = res.data;
+        API_BASE_URL + '/images/'
+      ).then(function (res) {
+        self.$data.images = res.data
       })
     },
-    onFileChange: function(event){
-      this.uploadFile = event.target.files[0];
+    onFileChange: function (event) {
+      this.uploadFile = event.target.files[0]
     },
-    uploadImage: function(){
-      var file = this.uploadFile;
-      var json = null;
-      var _this = this;
+    uploadImage: function () {
+      var file = this.uploadFile
+      var json = null
+      var _this = this
 
-      var data = {size: file.size, type: file.type};
+      var data = {size: file.size, type: file.type}
       axios.post(
-        API_BASE_URL+"/images/",
+        API_BASE_URL + '/images/',
         JSON.stringify(data)
-      ).then(function(res){
-        json = JSON.parse(JSON.stringify(res.data));
-        
-        axios.put(json["signed_url"], file, {
-          headers: { "Content-Type": file.type }
-        }).then(function(res){
-          json["status"] = "Uploaded";
-          var self = this;
+      ).then(function (res) {
+        json = JSON.parse(JSON.stringify(res.data))
+        axios.put(json['signed_url'], file, {
+          headers: { 'Content-Type': file.type }
+        }).then(function (res) {
+          json['status'] = 'Uploaded'
+          var self = this
           axios.put(
-            API_BASE_URL+"/images/", json
-          ).then(function(res){
-            alert("Successfully uploaded photo.");
-            _this.$router.go(_this.$router.currentRoute);
+            API_BASE_URL + '/images/', json
+          ).then(function (res) {
+            alert('Successfully uploaded photo.')
+            _this.$router.go(_this.$router.currentRoute)
           })
-        }).catch(function(error){
-          alert(error);
-          console.log(error);
+        }).catch(function (error) {
+          alert(error)
+          console.log(error)
         })
-      }).catch(function(error){
-        alert(error);
+      }).catch(function (error) {
+        alert(error)
       })
     }
   }

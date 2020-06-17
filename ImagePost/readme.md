@@ -96,3 +96,18 @@ CORS設定確認
 ```
 $ curl -I -X GET https://your-photos-bucket.s3-ap-northeast-1.amazonaws.com/example.png -H "Origin: http://example.com"
 ```
+
+Cognito ユーザPoolの作成
+```
+$ aws cloudformation create-stack --stack-name your-user-pool-name \
+--region ap-northeast-1 --template-body file://userpool-template.yaml
+```
+```
+$ aws cloudformation describe-stacks --stack-name your-user-pool-name --region ap-northeast-1
+```
+
+Cognito SDKのインストール
+```
+$ npm install aws-sdk --save
+$ npm install amazon-cognito-identity-js --save
+```

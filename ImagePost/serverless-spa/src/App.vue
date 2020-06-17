@@ -12,7 +12,7 @@
           </li>
           <li class="pure-menu-item">
             <a href="#" class="pure-menu-link">Login</a>
-          </li>          
+          </li>
         </ul>
       </div>
     </div>
