@@ -60,5 +60,96 @@ export default {
         }
       })
     })
+  },
+
+  authenticate: function (email, password) {
+    var _this = this
+    var authenticationData = {
+      Username: email,
+      Password: password
+    }
+    var authenticationDetails = new AuthenticationDetails(authenticationData)
+
+    var poolData = {
+      UserPoolId: appConfig.UserPoolId,
+      ClientId: appConfig.UserPoolClientId
+    }
+    var userPool = new CognitoUserPool(poolData)
+
+    var userData = {
+      Username: email,
+      Pool: userPool
+    }
+
+    var cognitoUser = new CognitoUser(userData)
+    return new Promise((resolve, reject) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function (result) {
+          console.log('access token' + result.getAccessToken().getJwtToken() )
+          console.log('idToken + ' + result.getIdToken().getJwtToken())
+          console.log('Successfully logged in')
+          _this.onChange(true)
+          resolve(result)
+        },
+        onFailure: function (err) {
+          console.log(err)
+          _this.onChange(false)
+          reject(err)
+        },
+        newPasswordRequired: function (userAttributes, requireAttributes) {
+          var attributesData = {
+            name: email
+          }
+          cognitoUser.completeNewPasswordChallenge('Password1', attributesData, this)
+        }
+      })
+    })
+  },
+
+  loggedIn: function () {
+    var _this = this
+    var poolData = {
+      UserPoolId: appConfig.UserPoolId,
+      ClientId: appConfig.UserPoolClientId
+    }
+    var userPool = new CognitoUserPool(poolData)
+    var cognitoUser = userPool.getCurrentUser()
+
+    if (cognitoUser != null) {
+      cognitoUser.getSession(function (err, session) {
+        if (err) {
+          console.log(err)
+          return false
+        }
+        console.log('session validity: ' + session.isValid())
+        cognitoUser.getUserAttributes(function (err, attributes) {
+          if (err) {
+            console.log(err)
+            return false
+          } else {
+            for (let i = 0; i < attributes.length; i++) {
+              console.log(attributes[i].getValue())
+              if (attributes[i].getName() == 'email') {
+                console.log('login user in ' + attributes[i].getValue())
+              }
+            }
+          }
+        })
+      })
+      return true
+    } else {
+      return false
+    }
+  },
+
+  logout: function () {
+    var poolData = {
+      UserPoolId: appConfig.UserPoolId,
+      ClientId: appConfig.UserPoolClientId
+    }
+    var userPool = new CognitoUserPool(poolData)
+    userPool.getCurrentUser().signOut()
+    this.onChange(false)
+    console.log("Successfully logged out")
   }
 }
