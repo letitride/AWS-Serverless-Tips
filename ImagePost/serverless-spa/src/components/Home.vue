@@ -60,11 +60,13 @@ export default {
       var file = this.uploadFile
       var json = null
       var _this = this
+      var auth_header = auth.get_id_token()
 
       var data = {size: file.size, type: file.type}
       axios.post(
         API_BASE_URL + '/images/',
-        JSON.stringify(data)
+        JSON.stringify(data),
+        { headers: {'Authorization': auth_header}}
       ).then(function (res) {
         json = JSON.parse(JSON.stringify(res.data))
         axios.put(json['signed_url'], file, {
@@ -73,7 +75,8 @@ export default {
           json['status'] = 'Uploaded'
           var self = this
           axios.put(
-            API_BASE_URL + '/images/', json
+            API_BASE_URL + '/images/', json,
+            { headers: {'Authorization': auth_header}}
           ).then(function (res) {
             alert('Successfully uploaded photo.')
             _this.$router.go(_this.$router.currentRoute)
