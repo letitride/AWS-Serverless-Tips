@@ -87,6 +87,8 @@ Resources:
           /images:
             get:
               responses: {}
+              security:
+              - Cognito_Custom_Authorizer: []
               x-amazon-apigateway-integration:
                 uri: !Sub arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/${getImages.Arn}/invocations
                 passthroughBehavior: "when_no_match"
@@ -94,6 +96,8 @@ Resources:
                 type: "aws_proxy"
             post:
               responses: {}
+              security:
+              - Cognito_Custom_Authorizer: []
               x-amazon-apigateway-integration:
                 uri: !Sub arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/${postImages.Arn}/invocations
                 passthroughBehavior: "when_no_match"
@@ -101,6 +105,8 @@ Resources:
                 type: "aws_proxy"
             put:
               responses: {}
+              security:
+              - Cognito_Custom_Authorizer: []
               x-amazon-apigateway-integration:
                 uri: !Sub arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/${updateImage.Arn}/invocations
                 passthroughBehavior: "when_no_match"
@@ -140,6 +146,8 @@ Resources:
           /images/{id}:
             get:
               responses: {}
+              security:
+              - Cognito_Custom_Authorizer: []
               x-amazon-apigateway-integration:
                 uri: !Sub arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/${getImageById.Arn}/invocations
                 passthroughBehavior: "when_no_match"
@@ -147,6 +155,8 @@ Resources:
                 type: "aws_proxy"
             delete:
               responses: {}
+              security:
+              - Cognito_Custom_Authorizer: []
               x-amazon-apigateway-integration:
                 uri: !Sub arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/${deleteImageById.Arn}/invocations
                 passthroughBehavior: "when_no_match"
@@ -183,6 +193,16 @@ Resources:
                       type: "string"
                     Access-Control-Allow-Origin:
                       type: "string"
+        securityDefinitions:
+          Cognito_Custom_Authorizer:
+            type: "apiKey"
+            name: "Authorization"
+            in: "header"
+            x-amazon-apigateway-authtype: "cognito_user_pools"
+            x-amazon-apigateway-authorizer:
+              providerARNs:
+              - "arn:aws:cognito-idp:ap-northeast-1:865823437905:userpool/ap-northeast-1_pCfySP3eN"
+              type: "cognito_user_pools"
   getImagesPermission:
     Type: "AWS::Lambda::Permission"
     Properties: 
@@ -213,3 +233,4 @@ Resources:
       Action: lambda:InvokeFunction
       FunctionName: !Ref deleteImageById
       Principal: apigateway.amazonaws.com
+  

@@ -24,6 +24,7 @@
 <script>
 import axios from 'axios'
 import appConfig from '../config'
+import auth from '../auth'
 
 const API_BASE_URL = appConfig.ApiBaseUrl
 const IMAGE_BASE_URL = appConfig.ImageBaseUrl
@@ -42,9 +43,12 @@ export default {
   },
   methods: {
     listImages: function () {
-      var self = this;
+      var self = this
+      var auth_header = auth.get_id_token()
+
       axios.get(
-        API_BASE_URL + '/images/'
+        API_BASE_URL + '/images/',
+        { headers: {'Authorization': auth_header}}
       ).then(function (res) {
         self.$data.images = res.data
       })

@@ -151,5 +151,20 @@ export default {
     userPool.getCurrentUser().signOut()
     this.onChange(false)
     console.log("Successfully logged out")
+  },
+
+  get_id_token: function () {
+    var poolData = {
+      UserPoolId: appConfig.UserPoolId,
+      ClientId: appConfig.UserPoolClientId
+    }
+
+    var userPool = new CognitoUserPool(poolData)
+    var cognitoUser = userPool.getCurrentUser()
+    var id_token = ''
+    cognitoUser.getSession(function (err, result) {
+      id_token = result.getIdToken().getJwtToken()
+    })
+    return id_token
   }
 }
