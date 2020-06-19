@@ -117,3 +117,39 @@ spaのビルド & デプロイ
 $ npm run build && cd dist
 $ aws s3 sync . s3://your-application-bucket
 ```
+
+kognition lambda関数の実行ロール
+```
+$ aws iam create-role --role-name lambda-imagerekognition-role \
+--assume-role-policy-document file://trustpolicy_kognition.json
+```
+```
+$ aws iam put-role-policy --role-name lambda-imagerekognition-role \
+--policy-name lambda-imagerekognition-policy --policy-document file://permission_kognition.json
+```
+
+rekognition lambdaのデプロイ
+```
+$ cd lambda && aws cloudformation package --template-file template-rekognition.yaml --output-template-file template-rekognition-output.yaml --s3-bucket serverless-app-sam-letitride
+
+$ aws cloudformation deploy --template-file template-rekognition-output.yaml --stack-name image-rekognition \
+--capabilities CAPABILITY_IAM --region ap-northeast-1 
+```
+
+cloudformation stackのoutput確認
+```
+$ aws cloudformation describe-stacks --stack-name image-rekognition --region ap-northeast-1
+```
+
+lambda s3イベントリソースの設定 s3からの起動を許可
+```
+$ aws lambda add-permission --function-name image-rekognition-rekognizeImages-1L3ZDVBNMILN3 \
+--action "lambda:InvokeFunction" --principal s3.amazonaws.com \
+--source-arn "arn:aws:s3:::your-photos-bucket" \
+--statement-id 1 --region ap-northeast-1
+```
+
+イベントリソースの定義
+```
+$ aws s3api put-bucket-notification-configuration --bucket your-photos-bucket --notification-configuration file://notification.json 
+```
