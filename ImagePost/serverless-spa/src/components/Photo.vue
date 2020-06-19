@@ -15,7 +15,7 @@
 
 <script>
 import axios from 'axios'
-import appConfig from "../config"
+import appConfig from  '../config'
 import auth from '../auth'
 
 const API_BASE_URL = appConfig.ApiBaseUrl
@@ -41,10 +41,10 @@ export default {
       axios.get(API_BASE_URL + '/images/' + this.photo_id, {
         headers: {Authorization: auth_header}
       })
-      .then(function (res) {
-        console.log(res.data)
-        self.$data.type = res.data.type.split('/')[1]
-      })
+        .then(function (res) {
+          console.log(res.data)
+          self.$data.type = res.data.type.split('/')[1]
+        })
     },
     deleteImage: function () {
       var self = this
@@ -52,11 +52,11 @@ export default {
       axios.delete(API_BASE_URL + '/images/' + this.photo_id, {
         headers: {Authorization: auth_header}
       })
-      .then(function (res) {
-        console.log(self.photo_id + "is deleted.")
-        alert("画像を削除しました")
-        self.$router.replace('/')
-      })
+        .then(function (res) {
+          console.log(self.photo_id + 'is deleted.')
+          alert('画像を削除しました')
+          self.$router.replace('/')
+        })
     }
   }
 }
