@@ -111,3 +111,9 @@ Cognito SDKのインストール
 $ npm install aws-sdk --save
 $ npm install amazon-cognito-identity-js --save
 ```
+
+spaのビルド & デプロイ
+```
+$ npm run build && cd dist
+$ aws s3 sync . s3://your-application-bucket
+```
