@@ -9,7 +9,9 @@
 
     <div v-for="image in images" :key="image.photo_id"
       class="photo pure-u-1-3 pure-u-md-1-3 pure-u-lg-1-3 pure-u-xl-1-3">
-      <img v-bind:src="image_url_base + image.photo_id + '.' + image.type.split('/')[1]">
+      <router-link v-bind:to="{ name: 'photo', params: {photo_id: image.photo_id}}">
+        <img v-bind:src="image_url_base + image.photo_id + '.' + image.type.split('/')[1]">
+      </router-link>
     </div>
     <div class="pure-u-1 form-box" id="upload-image">
       <div class="l-box">

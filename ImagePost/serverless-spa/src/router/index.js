@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Signup from '@/components/Signup'
 import Confirm from '@/components/Confirm'
 import Login from '@/components/Login'
+import Photo from '@/components/Photo'
 
 import auth from '../auth'
 
@@ -32,6 +33,12 @@ export default new Router({
       path: '/confirm',
       name: 'confirm',
       component: Confirm
+    },
+    {
+      path: '/photo/:photo_id',
+      name: 'photo',
+      component: Photo,
+      beforeEnter: requireAuth
     },
     {
       path: '/home',
